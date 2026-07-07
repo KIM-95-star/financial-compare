@@ -12,7 +12,8 @@ except Exception:
 st.set_page_config(page_title="금융상품 1분 비교표 생성기", page_icon="💰", layout="wide")
 
 st.title("💰 금융상품 1분 비교표 생성기")
-st.subtitle("비교하고 싶은 금융상품 정보나 뉴스 기사를 넣으면 AI가 한눈에 보기 쉽게 표로 정리해 드립니다.")
+# 에러가 났던 st.subtitle 대신 공식 명령어인 st.write로 수정했습니다.
+st.write("비교하고 싶은 금융상품 정보나 뉴스 기사를 넣으면 AI가 한눈에 보기 쉽게 표로 정리해 드립니다.")
 
 # 레이아웃 나누기 (왼쪽: 입력창, 오른쪽: 결과창)
 col1, col2 = st.columns([1, 1])
@@ -36,8 +37,8 @@ with col2:
         else:
             with st.spinner("AI가 금융상품을 꼼꼼하게 분석 중입니다... 잠시만 기다려주세요."):
                 try:
-                    # Gemini 모델 설정 및 프롬프트 작성
-                    model = genai.NaturalLanguageModel("gemini-1.5-flash") # 최신 경량화 모델 사용
+                    # 최신 지원 모델인 gemini-1.5-flash로 설정
+                    model = genai.GenerativeModel("gemini-1.5-flash")
                     
                     prompt = f"""
                     당신은 전문 금융 자산관리사(FP)입니다. 
@@ -66,6 +67,6 @@ with col2:
                     st.success("비교표 생성이 완료되었습니다!")
                     
                 except Exception as e:
-                    st.error(text=f"오류가 발생했습니다. API 키나 입력을 확인해 주세요. (에러 내용: {e})")
-    else:
-        st.info("왼쪽에 상품 정보를 입력하고 버튼을 누르면 여기에 비교표가 나타납니다.")
+                    st.error(f"오류가 발생했습니다. API 키나 입력을 확인해 주세요. (에러 내용: {e})")
+else:
+    st.info("왼쪽에 상품 정보를 입력하고 버튼을 누르면 여기에 비교표가 나타납니다.")
