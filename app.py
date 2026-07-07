@@ -12,7 +12,6 @@ except Exception:
 st.set_page_config(page_title="금융상품 1분 비교표 생성기", page_icon="💰", layout="wide")
 
 st.title("💰 금융상품 1분 비교표 생성기")
-# 에러가 났던 st.subtitle 대신 공식 명령어인 st.write로 수정했습니다.
 st.write("비교하고 싶은 금융상품 정보나 뉴스 기사를 넣으면 AI가 한눈에 보기 쉽게 표로 정리해 드립니다.")
 
 # 레이아웃 나누기 (왼쪽: 입력창, 오른쪽: 결과창)
@@ -31,13 +30,14 @@ with col1:
 with col2:
     st.subheader("✨ AI 분석 및 비교표 결과")
     
+    # [수정] 아래 if-else 문의 들여쓰기 라인을 col2 안으로 올바르게 정렬했습니다.
     if generate_btn:
         if not user_input.strip():
             st.warning("비교할 상품 내용을 입력해 주세요!")
         else:
             with st.spinner("AI가 금융상품을 꼼꼼하게 분석 중입니다... 잠시만 기다려주세요."):
                 try:
-                    # 최신 지원 모델인 gemini-1.5-flash로 설정
+                    # 최신 지원 모델 설정
                     model = genai.GenerativeModel("gemini-1.5-flash")
                     
                     prompt = f"""
@@ -68,5 +68,5 @@ with col2:
                     
                 except Exception as e:
                     st.error(f"오류가 발생했습니다. API 키나 입력을 확인해 주세요. (에러 내용: {e})")
-else:
-    st.info("왼쪽에 상품 정보를 입력하고 버튼을 누르면 여기에 비교표가 나타납니다.")
+    else:
+        st.info("왼쪽에 상품 정보를 입력하고 버튼을 누르면 여기에 비교표가 나타납니다.")
